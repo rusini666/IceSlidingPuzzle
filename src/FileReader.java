@@ -7,7 +7,7 @@ public class FileReader {
     public static void main(String[] args) throws FileNotFoundException {
         long start = System.currentTimeMillis();
 
-        List<List<String>> map = PuzzleSolver.readFile(new File("puzzle_2560.txt")); // list of lists to read CSV file
+        List<List<String>> map = PuzzleSolver.readFile(new File("maze25_1.txt")); // list of lists to read CSV file
         List<Integer[]> answer = PuzzleSolver.solve(map);
         PuzzleSolver.displayPath(answer);
 
