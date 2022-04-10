@@ -19,9 +19,9 @@ public class PuzzleSolver {
     }
 
     // the implementation using Dijkstra algorithm
-    public static List<Integer[]> solve(List<List<String>> grid) {
-        int rows = grid.size();
-        int columns = grid.get(0).size();
+    public static List<Integer[]> solve(List<List<String>> map) {
+        int rows = map.size();
+        int columns = map.get(0).size();
         int startRow = 0;
         int startCol = 0;
         int endCol = 0;
@@ -29,32 +29,32 @@ public class PuzzleSolver {
 
         for(int i = 0; i < rows; i++) { // store coordinates(row, column) of 'S' and 'F'
             for (int j = 0; j < columns; j++) {
-                if(grid.get(i).get(j).equals("S")) {
+                if(map.get(i).get(j).equals("S")) {
                     startRow = i;
                     startCol = j;
                 }
-                if (grid.get(i).get(j).equals("F")) {
+                if (map.get(i).get(j).equals("F")) {
                     endRow = i;
                     endCol = j;
                 }
             }
         }
 
-        int[][] distance = new int[rows][columns];
+        int[][] distance = new int[rows][columns]; // store the puzzle size
 
         for (int i = 0; i < distance.length; i++) {
             for(int j = 0; j < columns; j++) {
-                distance[i][j] = Integer.MAX_VALUE;
+                distance[i][j] = Integer.MAX_VALUE; // putting a tentative value as the weight for all unvisited nodes
             }
         }
-        PriorityQueue<Queue> priorityQueue = new PriorityQueue<>();
-        Integer[] arr = new Integer[] {startRow, startCol};
+        PriorityQueue<Queue> priorityQueue = new PriorityQueue<>(); // stores Queue objs
+        Integer[] arr = new Integer[] {startRow, startCol}; // store position of 'S'
         List<Integer[]> arrayList = new ArrayList<>();
         arrayList.add(arr);
         priorityQueue.add(new Queue(0, startRow, startCol,  arrayList));
 
         while (!priorityQueue.isEmpty()) {
-            Queue queueObj = priorityQueue.remove(); // remove the Queue Object with the shortest distance
+            Queue queueObj = priorityQueue.remove(); // remove the Queue obj with the minimum weight
             List<Integer[]> path = queueObj.coordinates;
             if (path.get(path.size() - 1)[0] == endRow && path.get(path.size() - 1)[1] == endCol) return path;
 
@@ -65,18 +65,20 @@ public class PuzzleSolver {
                 int rowDirection = direction[0];
                 int columnDirection = direction[1];
 
+                // checking the edge conditions
                 while (((0 <= currentRow + rowDirection) && (currentRow + rowDirection < rows)) && ((0 <=  currentColumn
-                        + columnDirection) && (currentColumn + columnDirection < columns)) && !grid.get(currentRow +
+                        + columnDirection) && (currentColumn + columnDirection < columns)) && !map.get(currentRow +
                         rowDirection).get(currentColumn + columnDirection).equals("0")) {
                     count += 1;
                     currentRow += rowDirection;
                     currentColumn += columnDirection;
-                    if (grid.get(currentRow).get(currentColumn).equals("F")) {
+                    if (map.get(currentRow).get(currentColumn).equals("F")) {
                         path.add(new Integer[] {currentRow, currentColumn});
                         return path ;
                     }
                 }
 
+                // checking whether the weight is the tentative value assigned or
                 if (distance[currentRow][currentColumn] == Integer.MAX_VALUE || queueObj.distance + count < distance[currentRow][currentColumn]) {
                     distance[currentRow][currentColumn] = queueObj.distance + count;
                     List<Integer[]> integers = new ArrayList<>(path);
