@@ -7,7 +7,7 @@ public class FileReader {
     public static void main(String[] args) throws FileNotFoundException {
         long start = System.currentTimeMillis();
 
-        List<List<String>> map = PuzzleSolver.readFile(new File("puzzle_2688.txt")); // store each row of the maze as an element in a 2D array
+        List<List<String>> map = PuzzleSolver.readFile(new File("maze10_3.txt")); // store each row of the maze as an element in a 2D array
         List<Integer[]> answer = PuzzleSolver.solve(map);
         long now = System.currentTimeMillis();
         double elapsed = now - start;
