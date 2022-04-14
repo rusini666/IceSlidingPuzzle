@@ -1,5 +1,9 @@
 import java.util.List;
 
+/**
+ * @author Rusini Thara Gunarathne
+ * @author 20200205
+ */
 class Queue implements Comparable<Queue> {
     int distance;
     int row;

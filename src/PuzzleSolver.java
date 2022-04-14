@@ -2,20 +2,22 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.*;
 
+/**
+ * @author Rusini Thara Gunarathne
+ * @author 20200205
+ */
 public class PuzzleSolver {
 
-    private static final int[][] directions = new int[][] {{1, 0},{-1, 0}, {0, 1}, {0, -1}};
+    private static final int[][] directions = new int[][] {{1, 0},{-1, 0}, {0, 1}, {0, -1}}; // the four cardinal directions
 
     public static List<List<String>> readFile (File file) throws FileNotFoundException {
-        List<List<String>> grid = new ArrayList<>();
-        // useful when you are trying to read a CSV file, and then you need to handle list of lists to get it in memory,
-        // perform some processing and write back to another CSV file
+        List<List<String>> map = new ArrayList<>();
         Scanner scanner = new Scanner(file);
         while (scanner.hasNext()) {
             String[] line = scanner.nextLine().split("");
-            grid.add(Arrays.asList(line));
+            map.add(Arrays.asList(line));
         }
-        return grid;
+        return map;
     }
 
     // the implementation using Dijkstra algorithm
@@ -78,7 +80,7 @@ public class PuzzleSolver {
                     }
                 }
 
-                // checking whether the weight is the tentative value assigned or
+                // checking whether the weight is the tentative value assigned or is greater
                 if (distance[currentRow][currentColumn] == Integer.MAX_VALUE || queueObj.distance + count < distance[currentRow][currentColumn]) {
                     distance[currentRow][currentColumn] = queueObj.distance + count;
                     List<Integer[]> integers = new ArrayList<>(path);
@@ -91,6 +93,7 @@ public class PuzzleSolver {
         return new ArrayList<>();
     }
 
+    // displays the path from 'S' to 'F'
     public static void displayPath (List<Integer[]> path) {
         if (path.size() > 0) {
             System.out.printf("1. Start at: (%d, %d) \n", path.get(0)[1] + 1, path.get(0)[0] + 1);
